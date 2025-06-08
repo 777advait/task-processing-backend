@@ -3,8 +3,8 @@
   "module": "src/index.ts",
   "type": "module",
   "scripts": {
-    "dev": "bunx wrangler dev",
-    "deploy": "bunx wrangler deploy"
+    "workers:dev": "bunx wrangler dev",
+    "workers:deploy": "bunx wrangler deploy"
   },
   "devDependencies": {
     "@types/bun": "latest"
