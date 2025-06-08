@@ -2,6 +2,10 @@
   "name": "task-processing-backend",
   "module": "src/index.ts",
   "type": "module",
+  "scripts": {
+    "dev": "bunx wrangler dev",
+    "deploy": "bunx wrangler deploy"
+  },
   "devDependencies": {
     "@types/bun": "latest"
   },
