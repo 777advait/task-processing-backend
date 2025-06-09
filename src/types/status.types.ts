@@ -19,9 +19,4 @@ export enum TaskStatus {
    * Task failed during execution. Should be retried or reviewed.
    */
   FAILED = "failed",
-
-  /**
-   * Task was skipped, canceled, or manually rejected before execution.
-   */
-  REJECTED = "rejected",
 }

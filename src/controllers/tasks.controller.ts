@@ -15,7 +15,9 @@ export const tasksController = {
       );
     }
 
-    c.executionCtx.waitUntil(tasksService.createTask(validation.data));
+    tasksService
+      .createTask(validation.data)
+      .catch((err) => console.error("Background task failed", err));
     return c.json({ message: "Task accepted for processing" }, 202);
   },
 
@@ -31,7 +33,9 @@ export const tasksController = {
       );
     }
 
-    c.executionCtx.waitUntil(tasksService.createTasks(validation.data));
+    tasksService
+      .createTasks(validation.data)
+      .catch((err) => console.error("Background task failed", err));
     return c.json({ message: "Tasks accepted for processing" }, 202);
   },
 };

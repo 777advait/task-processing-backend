@@ -1,25 +1,49 @@
+import { emailQueue } from "@/queues/email.queue";
+import { smsQueue } from "@/queues/sms.queue";
+import { statusStore } from "@/stores/status.store";
 import { TaskStatus } from "@/types/status.types";
 import type { TTask, TTaskBatch } from "@/types/tasks.types";
 
 class TasksService {
-  async createTask(
-    task: TTask
-  ): Promise<{ status: TaskStatus; message: string }> {
-    // Simulate accepting a task
-    return Promise.resolve({
-      status: TaskStatus.QUEUED,
-      message: `Task ${task.id} accepted successfully.`,
-    });
+  async createTask(task: TTask) {
+    let job;
+
+    if (task.type === "email") {
+      job = await emailQueue.add(task.type, task.payload);
+    } else if (task.type === "sms") {
+      job = await smsQueue.add(task.type, task.payload);
+    } else {
+      return;
+    }
+
+    if (!job.id) {
+      console.warn("Job has no ID! Skipping this task.");
+      return;
+    }
+
+    statusStore.setStatus(job.id, TaskStatus.QUEUED);
   }
 
-  async createTasks(
-    tasks: TTaskBatch
-  ): Promise<{ status: TaskStatus; message: string }[]> {
-    return Promise.resolve(
-      tasks.map((task) => ({
-        status: TaskStatus.QUEUED,
-        message: `Task ${task.id} accepted successfully`,
-      }))
+  async createTasks(tasks: TTaskBatch) {
+    await Promise.all(
+      tasks.map(async (task) => {
+        let job;
+
+        if (task.type === "email") {
+          job = await emailQueue.add(task.type, task.payload);
+        } else if (task.type === "sms") {
+          job = await smsQueue.add(task.type, task.payload);
+        } else {
+          return;
+        }
+
+        if (!job.id) {
+          console.warn("Job has no ID! Skipping this task.");
+          return;
+        }
+
+        statusStore.setStatus(job.id, TaskStatus.QUEUED);
+      })
     );
   }
 }
