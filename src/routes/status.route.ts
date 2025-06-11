@@ -9,6 +9,6 @@ const statusRoute = new Hono();
  * @returns { status: TaskStatus }
  * @throws { 400 } - If the shape of the request body is invalid
  */
-statusRoute.post("/get/:id", async (c) => await statusController.getStatus(c));
+statusRoute.get("/get/:id", async (c) => await statusController.getStatus(c));
 
 export { statusRoute };
