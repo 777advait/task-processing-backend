@@ -5,34 +5,17 @@ import { TaskStatus } from "@/types/status.types";
 import type { TTask, TTaskBatch } from "@/types/tasks.types";
 
 class TasksService {
-  async createTask(task: TTask) {
-    let job;
-
-    if (task.type === "email") {
-      job = await emailQueue.add(task.type, task.payload);
-    } else if (task.type === "sms") {
-      job = await smsQueue.add(task.type, task.payload);
-    } else {
-      return;
-    }
-
-    if (!job.id) {
-      console.warn("Job has no ID! Skipping this task.");
-      return;
-    }
-
-    statusStore.setStatus(job.id, TaskStatus.QUEUED);
-  }
-
   async createTasks(tasks: TTaskBatch) {
     await Promise.all(
       tasks.map(async (task) => {
         let job;
 
         if (task.type === "email") {
-          job = await emailQueue.add(task.type, task.payload);
+          job = await emailQueue.add(task.type, task.payload, {
+            jobId: task.id,
+          });
         } else if (task.type === "sms") {
-          job = await smsQueue.add(task.type, task.payload);
+          job = await smsQueue.add(task.type, task.payload, { jobId: task.id });
         } else {
           return;
         }

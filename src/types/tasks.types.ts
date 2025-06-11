@@ -14,10 +14,12 @@ const SmsPayloadSchema = z.object({
 
 export const STask = z.discriminatedUnion("type", [
   z.object({
+    id: z.string(),
     type: z.literal("email"),
     payload: EmailPayloadSchema,
   }),
   z.object({
+    id: z.string(),
     type: z.literal("sms"),
     payload: SmsPayloadSchema,
   }),
