@@ -3,20 +3,20 @@ export enum TaskStatus {
    * Task has been received and is queued for processing.
    * No worker has picked it up yet.
    */
-  QUEUED = "queued",
+  QUEUED = "QUEUED",
 
   /**
    * A worker has picked up the task and is currently executing it.
    */
-  PROCESSING = "processing",
+  PROCESSING = "PROCESSING",
 
   /**
    * Task completed successfully with no errors.
    */
-  COMPLETED = "completed",
+  COMPLETED = "COMPLETED",
 
   /**
    * Task failed during execution. Should be retried or reviewed.
    */
-  FAILED = "failed",
+  FAILED = "FAILED",
 }

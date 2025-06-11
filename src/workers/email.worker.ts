@@ -25,6 +25,7 @@ export const emailWorker = createWorker("email", async (job) => {
 
 emailWorker.on("failed", (job, error) => {
   const id = job?.id;
+  
 
   if (!id) {
     console.warn("Failed job has no ID!");

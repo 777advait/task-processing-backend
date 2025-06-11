@@ -26,6 +26,3 @@ export const STask = z.discriminatedUnion("type", [
 ]);
 
 export type TTask = z.infer<typeof STask>;
-export const STaskBatch = z.array(STask);
-
-export type TTaskBatch = z.infer<typeof STaskBatch>;
