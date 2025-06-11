@@ -5,6 +5,7 @@ import { prettyJSON } from "hono/pretty-json";
 
 // registry imports
 import "@/workers/email.worker";
+import "@/workers/sms.worker";
 
 const app = new Hono().basePath("/api/v1");
 

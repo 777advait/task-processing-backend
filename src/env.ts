@@ -6,6 +6,7 @@ export const env = createEnv({
     REDIS_HOST: z.string(),
     REDIS_PORT: z.coerce.number(),
     REDIS_PASSWORD: z.string(),
+    REDIS_USERNAME: z.string(),
   },
   runtimeEnv: process.env,
 });

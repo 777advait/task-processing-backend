@@ -4,4 +4,8 @@ import { redis as connection } from "@/core/redis";
 
 export const createQueue = <T extends keyof QueueTypes>(
   name: T
-): Queue<QueueTypes[T]> => new Queue<QueueTypes[T]>(name, { connection });
+): Queue<QueueTypes[T]> =>
+  new Queue<QueueTypes[T]>(name, {
+    connection,
+    defaultJobOptions: { removeOnComplete: true, removeOnFail: true },
+  });
